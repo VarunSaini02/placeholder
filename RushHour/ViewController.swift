@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+//Need outlets and actions for every image :(
+//Need half yellow, half (ANY CAR COLOR/GRAY) image to show exit? 
+
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
