@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  RushHour
 //
-//  Created by 90304593 on 4/7/20.
-//  Copyright © 2020 90304593. All rights reserved.
+//  Created by Blake Branvold and Varun Saini on 4/7/20.
+//  Copyright © 2020 Blake Branvold and Varun Saini. All rights reserved.
 //
 
 import UIKit
