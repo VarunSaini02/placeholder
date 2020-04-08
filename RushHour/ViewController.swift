@@ -10,7 +10,10 @@ import UIKit
 
 
 //Need outlets and actions for every image :(
-//Need half yellow, half (ANY CAR COLOR/GRAY) image to show exit? 
+//Need half yellow, half (ANY CAR COLOR/GRAY) image to show exit?
+//Need isSelected version of each image
+//might be good to categorize images by car type
+//Car swift class?
 
 
 class ViewController: UIViewController {
