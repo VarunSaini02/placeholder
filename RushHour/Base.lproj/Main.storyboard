@@ -216,6 +216,44 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="x1y1" destination="EJO-TV-uPx" id="ozX-6e-MkQ"/>
+                        <outlet property="x1y2" destination="Dyz-7O-yQd" id="2Pz-3t-zaX"/>
+                        <outlet property="x1y3" destination="Egz-RD-82e" id="8CL-gO-ivs"/>
+                        <outlet property="x1y4" destination="ISl-yW-Axa" id="Xmc-f0-Rie"/>
+                        <outlet property="x1y5" destination="Z9f-Ji-Jv0" id="XDI-ci-lsm"/>
+                        <outlet property="x1y6" destination="3RD-7E-PtV" id="qUh-c7-h2C"/>
+                        <outlet property="x2y1" destination="VFL-GT-Avr" id="0L3-CN-5Ef"/>
+                        <outlet property="x2y2" destination="1IB-rC-GTZ" id="iNV-1D-J8K"/>
+                        <outlet property="x2y3" destination="2WY-YO-ZyN" id="Jk4-Da-H73"/>
+                        <outlet property="x2y4" destination="2Uj-F2-ZnX" id="iN5-S0-gAn"/>
+                        <outlet property="x2y5" destination="FUz-M7-YUl" id="QXw-dm-sru"/>
+                        <outlet property="x2y6" destination="MCD-WO-YEA" id="Roh-qu-Yjz"/>
+                        <outlet property="x3y1" destination="YZO-ir-hc8" id="OZ2-dW-m6i"/>
+                        <outlet property="x3y2" destination="GUl-2t-cko" id="pgN-cI-r53"/>
+                        <outlet property="x3y3" destination="gyj-TA-KYF" id="KZg-9e-T9T"/>
+                        <outlet property="x3y4" destination="7LR-lu-2HN" id="F6m-VK-fj2"/>
+                        <outlet property="x3y5" destination="wm2-ZH-36H" id="Om3-Wj-DYY"/>
+                        <outlet property="x3y6" destination="vVo-vz-zuv" id="jD5-Hv-GxX"/>
+                        <outlet property="x4y1" destination="XDd-Ra-iYv" id="JdP-CT-3Ib"/>
+                        <outlet property="x4y2" destination="Lgg-8Z-TYd" id="3bm-mv-cYk"/>
+                        <outlet property="x4y3" destination="YVF-Xa-bES" id="scp-3d-EOo"/>
+                        <outlet property="x4y4" destination="m7v-Vn-Qec" id="N0V-Lp-6Gd"/>
+                        <outlet property="x4y5" destination="qvA-NE-iD3" id="mYn-pz-Jiq"/>
+                        <outlet property="x4y6" destination="GUZ-9x-oaK" id="nhe-MS-rCW"/>
+                        <outlet property="x5y1" destination="jy6-4y-Z2G" id="4nK-W8-sJS"/>
+                        <outlet property="x5y2" destination="5Xm-pg-bqh" id="PQr-fc-yp1"/>
+                        <outlet property="x5y3" destination="Y5k-Nc-pJT" id="i6v-E2-vnG"/>
+                        <outlet property="x5y4" destination="g4O-Qa-nTe" id="eQy-0F-iWd"/>
+                        <outlet property="x5y5" destination="rBc-Qx-qqg" id="6Yt-bT-Ybh"/>
+                        <outlet property="x5y6" destination="UeI-Ua-9Ia" id="IOx-hj-hOS"/>
+                        <outlet property="x6y1" destination="4tl-MV-Ck3" id="DWQ-LK-JXv"/>
+                        <outlet property="x6y2" destination="ilK-9d-Sbe" id="vCA-J8-Dtq"/>
+                        <outlet property="x6y3" destination="cKy-PO-SJS" id="WK9-l9-Zq9"/>
+                        <outlet property="x6y4" destination="LON-Xc-Zdj" id="hcr-6q-HE6"/>
+                        <outlet property="x6y5" destination="Q3f-Sa-e1n" id="OUD-OC-heJ"/>
+                        <outlet property="x6y6" destination="UuP-MW-Vmf" id="Vw6-oc-Z6z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
