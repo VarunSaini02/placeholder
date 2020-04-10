@@ -19,7 +19,7 @@ import UIKit
 
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var x1y1: UIImageView!
     @IBOutlet weak var x2y1: UIImageView!
     @IBOutlet weak var x3y1: UIImageView!
@@ -66,27 +66,46 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("hi")
+        print("Starting!")
         // Do any additional setup after loading the view.
     }
 }
 
 class Car {
-    var Coords = [Int]()
+    var location = [Coordinate]()
+    var isHorizontal: Bool
     
-    init(x1: Int, x2: Int, y1: Int, y2: Int) {
-        self.Coords[0] = x1
-        self.Coords[1] = x2
-        self.Coords[2] = y1
-        self.Coords[3] = y2
+    // This initializer makes sure that cars are never wider than 1 block. Cars can be oriented vertically or horizontally, but their two width coordinates (theConstant) are always the same.
+    init(leftBottom: Int, rightTop: Int, constant: Int, isHorizontal: Bool) {
+        
+        self.isHorizontal = isHorizontal
+        
+        //this is a horizontal car
+        if (isHorizontal) {
+            
+        }
     }
     
     func printCoords() {
-        print(Coords)
+        print(location)
     }
     
-    func getCoords() -> [Int] {
-        return Coords
+    func getCoords() -> [Coordinate] {
+        return location
+    }
+    
+    func isTouchingCar(car: Car) -> Bool {
+        return true //placeholder
+    }
+}
+
+struct Coordinate {
+    var x = 0
+    var y = 0
+    
+    init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
     }
 }
 
