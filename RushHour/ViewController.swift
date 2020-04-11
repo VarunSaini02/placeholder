@@ -62,14 +62,40 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
-    
+    var cars = [Car]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
-        let car = Car(2, 5, 2, true)
-        car.printCoordinates() //test of coordinates system
+        
+        //generateCars(10)
+        
+        /*for car in cars {
+            car.printCoordinates()
+        }*/
+    }
+    
+    //generates non-user cars that aren't overlapping. numberOfCars is how many are generated.
+    func generateCars(_ numberOfCars: Int) {
+        while cars.count < numberOfCars {
+            let leftBottom = Int.random(in: 1...6)
+            
+            let rightTop = (leftBottom != 6) ? Int.random(in: (leftBottom + 1)...6) : 6
+            
+            let constant = Int.random(in: 1...6)
+            
+            let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
+            
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal)
+            
+            for car in cars {
+                if temporaryCar.isTouching(car) {
+                    continue;
+                }
+            }
+            cars.append(temporaryCar)
+        }
     }
 }
 
@@ -115,8 +141,15 @@ class Car {
         return coordinates
     }
     
-    func isTouchingCar(car: Car) -> Bool {
-        return true //placeholder
+    func isTouching(_ car: Car) -> Bool {
+        for coordinate in self.coordinates {
+            for otherCoordinate in car.coordinates {
+                if coordinate.equals(other: otherCoordinate) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
 }
