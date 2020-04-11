@@ -19,7 +19,7 @@ import UIKit
 
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var x1y1: UIImageView!
     @IBOutlet weak var x2y1: UIImageView!
     @IBOutlet weak var x3y1: UIImageView!
@@ -66,27 +66,80 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("hi")
+        print("Starting!")
         // Do any additional setup after loading the view.
+        let car = Car(2, 5, 2, true)
+        car.printCoordinates() //test of coordinates system
     }
 }
 
 class Car {
-    var Coords = [Int]()
+    var isHorizontal: Bool
+    var coordinates: [Coordinate]
     
-    init(x1: Int, x2: Int, y1: Int, y2: Int) {
-        self.Coords[0] = x1
-        self.Coords[1] = x2
-        self.Coords[2] = y1
-        self.Coords[3] = y2
+    // This initializer makes sure that cars are never wider than 1 block. Cars can be oriented vertically or horizontally, but their two width coordinates (theConstant) are always the same.
+    init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool) {
+        
+        self.isHorizontal = isHorizontal
+        coordinates = [Coordinate]()
+        
+        //this is a horizontal car
+        if (isHorizontal) {
+            var changingXValue = leftBottom
+            while (changingXValue <= rightTop) {
+                coordinates.append(Coordinate(changingXValue, constant))
+                changingXValue += 1
+            }
+        } else {
+            var changingYValue = leftBottom
+            while (changingYValue <= rightTop) {
+                coordinates.append(Coordinate(constant, changingYValue))
+                changingYValue += 1
+            }
+        }
     }
     
-    func printCoords() {
-        print(Coords)
+    func printCoordinates() {
+        var text = "["
+        for index in 0...coordinates.count - 1 {
+            if index == (coordinates.count - 1) {
+                text.append(coordinates[index].getString() + "]")
+            } else {
+                text.append(coordinates[index].getString() + "; ")
+            }
+        }
+        print(text)
     }
     
-    func getCoords() -> [Int] {
-        return Coords
+    func getCoords() -> [Coordinate] {
+        return coordinates
+    }
+    
+    func isTouchingCar(car: Car) -> Bool {
+        return true //placeholder
+    }
+    
+}
+
+struct Coordinate {
+    var x = 0
+    var y = 0
+    
+    init(_ x: Int, _ y: Int) {
+        self.x = x
+        self.y = y
+    }
+    
+    func equals(other: Coordinate) -> Bool {
+        return (self.x == other.x && self.y == other.y)
+    }
+    
+    func display() {
+        print("(\(x), \(y))")
+    }
+    
+    func getString() -> String {
+        return ("(\(x), \(y))")
     }
 }
 
