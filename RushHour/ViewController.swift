@@ -62,19 +62,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
+    var ImageViews = [[UIImageView]]()
+    var imageNames = ["brown","green","purple","red"]
     var cars = [Car]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
+        fillImageViews()
         
-        generateCars(10)
-        
+        generateCars(6)
         
         for car in cars {
             car.printCoordinates()
         }
+        
+        updateCarsOnBoard()
     }
     
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
@@ -97,6 +101,63 @@ class ViewController: UIViewController {
             }
             cars.append(temporaryCar)
         }
+    }
+    
+    func updateCarsOnBoard() {
+        for index in 0...cars.count-1 {
+            for coordinate in cars[index].coordinates {
+                let color = imageNames[index % imageNames.count]
+                ImageViews[coordinate.x - 1][coordinate.y - 1].image = UIImage(named: color)
+            }
+        }
+    }
+    
+    func fillImageViews() {
+        for _ in 0...5 {
+            ImageViews.append([UIImageView]())
+        }
+        
+        ImageViews[0].append(x1y1)
+        ImageViews[0].append(x1y2)
+        ImageViews[0].append(x1y3)
+        ImageViews[0].append(x1y4)
+        ImageViews[0].append(x1y5)
+        ImageViews[0].append(x1y6)
+        
+        ImageViews[1].append(x2y1)
+        ImageViews[1].append(x2y2)
+        ImageViews[1].append(x2y3)
+        ImageViews[1].append(x2y4)
+        ImageViews[1].append(x2y5)
+        ImageViews[1].append(x2y6)
+        
+        ImageViews[2].append(x3y1)
+        ImageViews[2].append(x3y2)
+        ImageViews[2].append(x3y3)
+        ImageViews[2].append(x3y4)
+        ImageViews[2].append(x3y5)
+        ImageViews[2].append(x3y6)
+        
+        ImageViews[3].append(x4y1)
+        ImageViews[3].append(x4y2)
+        ImageViews[3].append(x4y3)
+        ImageViews[3].append(x4y4)
+        ImageViews[3].append(x4y5)
+        ImageViews[3].append(x4y6)
+    
+        ImageViews[4].append(x5y1)
+        ImageViews[4].append(x5y2)
+        ImageViews[4].append(x5y3)
+        ImageViews[4].append(x5y4)
+        ImageViews[4].append(x5y5)
+        ImageViews[4].append(x5y6)
+    
+        ImageViews[5].append(x6y1)
+        ImageViews[5].append(x6y2)
+        ImageViews[5].append(x6y3)
+        ImageViews[5].append(x6y4)
+        ImageViews[5].append(x6y5)
+        ImageViews[5].append(x6y6)
     }
 }
 
