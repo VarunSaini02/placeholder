@@ -62,14 +62,102 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
-    
+    var ImageViews = [[UIImageView]]()
+    var imageNames = ["brown","green","purple","red"]
+    var cars = [Car]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
-        let car = Car(2, 5, 2, true)
-        car.printCoordinates() //test of coordinates system
+        fillImageViews()
+        
+        generateCars(6)
+        
+        for car in cars {
+            car.printCoordinates()
+        }
+        
+        updateCarsOnBoard()
+    }
+    
+    //generates non-user cars that do not overlap. numberOfCars is how many are generated.
+    func generateCars(_ numberOfCars: Int) {
+        whileloop: while cars.count < numberOfCars {
+            let leftBottom = Int.random(in: 1...6)
+            
+            let rightTop = (leftBottom != 6) ? Int.random(in: (leftBottom + 1)...6) : 6
+            
+            let constant = Int.random(in: 1...6)
+            
+            let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
+            
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal)
+            
+            for car in cars {
+                if temporaryCar.isTouching(car) {
+                    continue whileloop
+                }
+            }
+            cars.append(temporaryCar)
+        }
+    }
+    
+    func updateCarsOnBoard() {
+        for index in 0...cars.count-1 {
+            for coordinate in cars[index].coordinates {
+                let color = imageNames[index % imageNames.count]
+                ImageViews[coordinate.x - 1][coordinate.y - 1].image = UIImage(named: color)
+            }
+        }
+    }
+    
+    func fillImageViews() {
+        for _ in 0...5 {
+            ImageViews.append([UIImageView]())
+        }
+        
+        ImageViews[0].append(x1y1)
+        ImageViews[0].append(x1y2)
+        ImageViews[0].append(x1y3)
+        ImageViews[0].append(x1y4)
+        ImageViews[0].append(x1y5)
+        ImageViews[0].append(x1y6)
+        
+        ImageViews[1].append(x2y1)
+        ImageViews[1].append(x2y2)
+        ImageViews[1].append(x2y3)
+        ImageViews[1].append(x2y4)
+        ImageViews[1].append(x2y5)
+        ImageViews[1].append(x2y6)
+        
+        ImageViews[2].append(x3y1)
+        ImageViews[2].append(x3y2)
+        ImageViews[2].append(x3y3)
+        ImageViews[2].append(x3y4)
+        ImageViews[2].append(x3y5)
+        ImageViews[2].append(x3y6)
+        
+        ImageViews[3].append(x4y1)
+        ImageViews[3].append(x4y2)
+        ImageViews[3].append(x4y3)
+        ImageViews[3].append(x4y4)
+        ImageViews[3].append(x4y5)
+        ImageViews[3].append(x4y6)
+    
+        ImageViews[4].append(x5y1)
+        ImageViews[4].append(x5y2)
+        ImageViews[4].append(x5y3)
+        ImageViews[4].append(x5y4)
+        ImageViews[4].append(x5y5)
+        ImageViews[4].append(x5y6)
+    
+        ImageViews[5].append(x6y1)
+        ImageViews[5].append(x6y2)
+        ImageViews[5].append(x6y3)
+        ImageViews[5].append(x6y4)
+        ImageViews[5].append(x6y5)
+        ImageViews[5].append(x6y6)
     }
 }
 
@@ -115,8 +203,15 @@ class Car {
         return coordinates
     }
     
-    func isTouchingCar(car: Car) -> Bool {
-        return true //placeholder
+    func isTouching(_ car: Car) -> Bool {
+        for coordinate in self.coordinates {
+            for otherCoordinate in car.coordinates {
+                if coordinate.equals(other: otherCoordinate) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
 }
