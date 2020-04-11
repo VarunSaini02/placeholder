@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     func neutralGameBoard() {
         for i in 0...5 {
             for j in 0...5 {
-                ImageViews[i][j].image = UIImage(named: "marissa")
+                ImageViews[i][j].image = UIImage(named: "NeutralSpace")
             }
         }
     }
