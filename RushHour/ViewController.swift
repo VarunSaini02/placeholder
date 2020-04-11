@@ -71,22 +71,40 @@ class ViewController: UIViewController {
         print("Starting!")
         // Do any additional setup after loading the view.
         fillImageViews()
-        
-        generateCars(6)
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        generator(4)
+    }
+    
+    //puts together the generator and the display functions
+    func generator(_ numberOfCars: Int) {
+        neutralGameBoard()
+        generateCars(numberOfCars)
         
         for car in cars {
             car.printCoordinates()
         }
-        
+        print("")
         updateCarsOnBoard()
+    }
+    
+    //makes the game board colors neutral again
+    func neutralGameBoard() {
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].image = UIImage(named: "marissa")
+            }
+        }
     }
     
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
+        cars = [Car]()
         whileloop: while cars.count < numberOfCars {
-            let leftBottom = Int.random(in: 1...6)
+            let leftBottom = Int.random(in: 1...5)
             
-            let rightTop = (leftBottom != 6) ? Int.random(in: (leftBottom + 1)...6) : 6
+            let rightTop = (leftBottom != 5) ? Int.random(in: (leftBottom + 1)...(leftBottom + 2)) : 6
             
             let constant = Int.random(in: 1...6)
             
@@ -178,7 +196,9 @@ class Car {
                 coordinates.append(Coordinate(changingXValue, constant))
                 changingXValue += 1
             }
-        } else {
+        }
+        //this is a vertical car
+        else {
             var changingYValue = leftBottom
             while (changingYValue <= rightTop) {
                 coordinates.append(Coordinate(constant, changingYValue))
@@ -219,6 +239,8 @@ class Car {
 struct Coordinate {
     var x = 0
     var y = 0
+    
+    
     
     init(_ x: Int, _ y: Int) {
         self.x = x
