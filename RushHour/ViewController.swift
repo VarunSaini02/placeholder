@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         }
     }
     
-    //generates non-user cars that aren't overlapping. numberOfCars is how many are generated.
+    //generates non-user cars that do not overlap. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
         whileloop: while cars.count < numberOfCars {
             let leftBottom = Int.random(in: 1...6)
