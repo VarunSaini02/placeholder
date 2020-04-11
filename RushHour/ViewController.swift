@@ -69,16 +69,17 @@ class ViewController: UIViewController {
         print("Starting!")
         // Do any additional setup after loading the view.
         
-        //generateCars(10)
+        generateCars(10)
         
-        /*for car in cars {
+        
+        for car in cars {
             car.printCoordinates()
-        }*/
+        }
     }
     
     //generates non-user cars that aren't overlapping. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
-        while cars.count < numberOfCars {
+        whileloop: while cars.count < numberOfCars {
             let leftBottom = Int.random(in: 1...6)
             
             let rightTop = (leftBottom != 6) ? Int.random(in: (leftBottom + 1)...6) : 6
@@ -91,7 +92,7 @@ class ViewController: UIViewController {
             
             for car in cars {
                 if temporaryCar.isTouching(car) {
-                    continue;
+                    continue whileloop
                 }
             }
             cars.append(temporaryCar)
