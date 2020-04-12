@@ -11,9 +11,14 @@ import UIKit
 class Car {
     var isHorizontal: Bool
     var coordinates: [Coordinate]
+    var color: UIColor
+    
+    var red: Double
+    var green: Double
+    var blue: Double
     
     // This initializer makes sure that cars are never wider than 1 block. Cars can be oriented vertically or horizontally, but their two width coordinates (theConstant) are always the same.
-    init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool) {
+    init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool,  _ red: Double, _ green: Double, _ blue: Double, _ alpha: Double) {
         
         self.isHorizontal = isHorizontal
         coordinates = [Coordinate]()
@@ -34,6 +39,12 @@ class Car {
                 changingYValue += 1
             }
         }
+        
+        self.red = red
+        self.green = green
+        self.blue = blue
+        
+        color = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
     }
     
     func printCoordinates() {
@@ -91,7 +102,7 @@ class Car {
         } else if (direction.elementsEqual("down") && !isHorizontal) {
             if (coordinates[0].y != 1) {
                 for coordinate in coordinates {
-                    coordinate.x -= 1
+                    coordinate.y -= 1
                 }
             } else {
                 print("Can't move there.")
