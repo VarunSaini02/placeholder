@@ -60,15 +60,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
+    var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
     var imageNames = ["brown","green","purple","red"]
+    
+    var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
+    
     var cars = [Car]()
+    var selected: Car?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
-        fillImageViews()
+        fillImageViewsAndTapRecognizers()
+        neutralGameBoard()
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -79,6 +85,7 @@ class ViewController: UIViewController {
     func generator(_ numberOfCars: Int) {
         neutralGameBoard()
         generateCars(numberOfCars)
+        selected = cars[0]
         
         for car in cars {
             car.printCoordinates()
@@ -89,11 +96,18 @@ class ViewController: UIViewController {
     
     //makes the game board colors neutral again
     func neutralGameBoard() {
+        newBackground()
         for i in 0...5 {
             for j in 0...5 {
-                ImageViews[i][j].image = UIImage(named: "NeutralSpace")
+                //ImageViews[i][j].image = UIImage(named: "NeutralSpace")
+                ImageViews[i][j].image = nil
+                ImageViews[i][j].backgroundColor = background
             }
         }
+    }
+    
+    func newBackground() {
+        background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     }
     
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
@@ -108,7 +122,7 @@ class ViewController: UIViewController {
             
             let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
             
-            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal)
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...1), Double.random(in: 0.4...1), Double.random(in: 0.4...1), 1.0)
             
             for car in cars {
                 if temporaryCar.isTouching(car) {
@@ -120,15 +134,22 @@ class ViewController: UIViewController {
     }
     
     func updateCarsOnBoard() {
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].image = nil
+                ImageViews[i][j].backgroundColor = background
+            }
+        }
         for index in 0...cars.count-1 {
             for coordinate in cars[index].coordinates {
-                let color = imageNames[index % imageNames.count]
-                ImageViews[coordinate.x - 1][coordinate.y - 1].image = UIImage(named: color)
+                //let color = imageNames[index % imageNames.count]
+                //ImageViews[coordinate.x - 1][coordinate.y - 1].image = UIImage(named: color)
+                ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color
             }
         }
     }
     
-    func fillImageViews() {
+    func fillImageViewsAndTapRecognizers() {
         for _ in 0...5 {
             ImageViews.append([UIImageView]())
         }
@@ -160,19 +181,85 @@ class ViewController: UIViewController {
         ImageViews[3].append(x4y4)
         ImageViews[3].append(x4y5)
         ImageViews[3].append(x4y6)
-    
+        
         ImageViews[4].append(x5y1)
         ImageViews[4].append(x5y2)
         ImageViews[4].append(x5y3)
         ImageViews[4].append(x5y4)
         ImageViews[4].append(x5y5)
         ImageViews[4].append(x5y6)
-    
+        
         ImageViews[5].append(x6y1)
         ImageViews[5].append(x6y2)
         ImageViews[5].append(x6y3)
         ImageViews[5].append(x6y4)
         ImageViews[5].append(x6y5)
         ImageViews[5].append(x6y6)
+        
+        //initialize user interaction
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].isUserInteractionEnabled = true
+            }
+        }
+        
+        //initialize tap recognizers arrays
+        for _ in 0...5 {
+            TapRecognizers.append([UITapGestureRecognizer]())
+        }
+        
+        //initialize tap recognizers in arrays
+        for i in 0...5 {
+            for _ in 0...5 {
+                TapRecognizers[i].append(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
+            }
+        }
+        
+        //attach tap recognizers to image views
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].addGestureRecognizer(TapRecognizers[i][j])
+            }
+        }
+    }
+    
+    @objc func imageViewTapped(recognizer: UITapGestureRecognizer) {
+        let imageView = recognizer.view as? UIImageView
+        if imageView != nil {
+            for i in 0...5 {
+                for j in 0...5 {
+                    if (imageView?.isEqual(ImageViews[i][j]))! {
+                        clickedCoordinate(coordinate: Coordinate(i+1, j+1))
+                        print("UIImageView at Coordinate: (\(i+1), \(j+1)) was tapped.")
+                    }
+                }
+            }
+        }
+    }
+    
+    func clickedCoordinate(coordinate: Coordinate) {
+        for car in cars {
+            if car.hasCoordinate(compare: coordinate) {
+                selected = car
+            }
+        }
+    }
+    
+    @IBAction func rightPressed(_ sender: Any) {
+        selected?.move(direction: "right", cars: cars)
+        updateCarsOnBoard()
+    }
+    @IBAction func leftPressed(_ sender: Any) {
+        selected?.move(direction: "left", cars: cars)
+        updateCarsOnBoard()
+    }
+    
+    @IBAction func upPressed(_ sender: Any) {
+        selected?.move(direction: "up", cars: cars)
+        updateCarsOnBoard()
+    }
+    @IBAction func downPressed(_ sender: Any) {
+        selected?.move(direction: "down", cars: cars)
+        updateCarsOnBoard()
     }
 }
