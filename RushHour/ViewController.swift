@@ -60,6 +60,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
+    var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
     var imageNames = ["brown","green","purple","red"]
     
@@ -72,7 +73,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
-        fillImageViews()
+        fillImageViewsAndTapRecognizers()
         neutralGameBoard()
     }
     
@@ -148,7 +149,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func fillImageViews() {
+    func fillImageViewsAndTapRecognizers() {
         for _ in 0...5 {
             ImageViews.append([UIImageView]())
         }
@@ -194,23 +195,71 @@ class ViewController: UIViewController {
         ImageViews[5].append(x6y4)
         ImageViews[5].append(x6y5)
         ImageViews[5].append(x6y6)
+        
+        //initialize user interaction
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].isUserInteractionEnabled = true
+            }
+        }
+        
+        //initialize tap recognizers arrays
+        for _ in 0...5 {
+            TapRecognizers.append([UITapGestureRecognizer]())
+        }
+        
+        //initialize tap recognizers in arrays
+        for i in 0...5 {
+            for _ in 0...5 {
+                TapRecognizers[i].append(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
+            }
+        }
+        
+        //attach tap recognizers to image views
+        for i in 0...5 {
+            for j in 0...5 {
+                ImageViews[i][j].addGestureRecognizer(TapRecognizers[i][j])
+            }
+        }
+    }
+    
+    @objc func imageViewTapped(recognizer: UITapGestureRecognizer) {
+        let imageView = recognizer.view as? UIImageView
+        if imageView != nil {
+            for i in 0...5 {
+                for j in 0...5 {
+                    if (imageView?.isEqual(ImageViews[i][j]))! {
+                        clickedCoordinate(coordinate: Coordinate(i+1, j+1))
+                        print("UIImageView at Coordinate: (\(i+1), \(j+1)) was tapped.")
+                    }
+                }
+            }
+        }
+    }
+    
+    func clickedCoordinate(coordinate: Coordinate) {
+        for car in cars {
+            if car.hasCoordinate(compare: coordinate) {
+                selected = car
+            }
+        }
     }
     
     @IBAction func rightPressed(_ sender: Any) {
-        selected?.move(direction: "right")
+        selected?.move(direction: "right", cars: cars)
         updateCarsOnBoard()
     }
     @IBAction func leftPressed(_ sender: Any) {
-        selected?.move(direction: "left")
+        selected?.move(direction: "left", cars: cars)
         updateCarsOnBoard()
     }
     
     @IBAction func upPressed(_ sender: Any) {
-        selected?.move(direction: "up")
+        selected?.move(direction: "up", cars: cars)
         updateCarsOnBoard()
     }
     @IBAction func downPressed(_ sender: Any) {
-        selected?.move(direction: "down")
+        selected?.move(direction: "down", cars: cars)
         updateCarsOnBoard()
     }
 }

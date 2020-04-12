@@ -59,8 +59,13 @@ class Car {
         print(text)
     }
     
-    func getCoords() -> [Coordinate] {
-        return coordinates
+    func hasCoordinate(compare: Coordinate) -> Bool {
+        for coordinate in coordinates {
+            if coordinate.equals(other: compare) {
+                return true
+            }
+        }
+        return false
     }
     
     func isTouching(_ car: Car) -> Bool {
@@ -74,35 +79,87 @@ class Car {
         return false
     }
     
-    func move(direction: String) {
+    func move(direction: String, cars: [Car]) {
+        
+        var otherCars = cars
+        var indexToRemove = 0
+        
+        for index in 0...otherCars.count-1 {
+            if self.isTouching(otherCars[index]) {
+                indexToRemove = index
+            }
+        }
+        
+        otherCars.remove(at: indexToRemove)
+        
         if (direction.elementsEqual("right") && isHorizontal) {
             if (coordinates[coordinates.count - 1].x != 6) {
-                for coordinate in coordinates {
-                    coordinate.x += 1
+                var willBeCollision = false
+                for car in otherCars {
+                    if car.hasCoordinate(compare: Coordinate(coordinates[coordinates.count - 1].x + 1, coordinates[coordinates.count - 1].y)) {
+                        willBeCollision = true
+                    }
+                }
+                if (willBeCollision == false) {
+                    for coordinate in coordinates {
+                        coordinate.x += 1
+                    }
+                } else {
+                    print("Car in the way.")
                 }
             } else {
                 print("Can't move there.")
             }
         } else if (direction.elementsEqual("left") && isHorizontal) {
             if (coordinates[0].x != 1) {
-                for coordinate in coordinates {
-                    coordinate.x -= 1
+                var willBeCollision = false
+                for car in otherCars {
+                    if car.hasCoordinate(compare: Coordinate(coordinates[0].x - 1, coordinates[0].y)) {
+                        willBeCollision = true
+                    }
+                }
+                if (willBeCollision == false) {
+                    for coordinate in coordinates {
+                        coordinate.x -= 1
+                    }
+                } else {
+                    print("Car in the way.")
                 }
             } else {
                 print("Can't move there.")
             }
         } else if (direction.elementsEqual("up") && !isHorizontal) {
             if (coordinates[coordinates.count - 1].y != 6) {
-                for coordinate in coordinates {
-                    coordinate.y += 1
+                var willBeCollision = false
+                for car in otherCars {
+                    if car.hasCoordinate(compare: Coordinate(coordinates[coordinates.count - 1].x, coordinates[coordinates.count - 1].y + 1)) {
+                        willBeCollision = true
+                    }
+                }
+                if (willBeCollision == false) {
+                    for coordinate in coordinates {
+                        coordinate.y += 1
+                    }
+                } else {
+                    print("Car in the way.")
                 }
             } else {
                 print("Can't move there.")
             }
         } else if (direction.elementsEqual("down") && !isHorizontal) {
             if (coordinates[0].y != 1) {
-                for coordinate in coordinates {
-                    coordinate.y -= 1
+                var willBeCollision = false
+                for car in otherCars {
+                    if car.hasCoordinate(compare: Coordinate(coordinates[0].x, coordinates[0].y - 1)) {
+                        willBeCollision = true
+                    }
+                }
+                if (willBeCollision == false) {
+                    for coordinate in coordinates {
+                        coordinate.y -= 1
+                    }
+                } else {
+                    print("Car in the way.")
                 }
             } else {
                 print("Can't move there.")
