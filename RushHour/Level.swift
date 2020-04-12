@@ -9,5 +9,11 @@
 import UIKit
 
 class Level {
+    var cars: [Car]
+    var finishLine: Coordinate
     
+    init(_ cars: [Car], _ finishline: Coordinate) {
+        self.cars = cars
+        self.finishLine = finishline
+    }
 }

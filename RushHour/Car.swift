@@ -26,7 +26,7 @@ class Car {
                 changingXValue += 1
             }
         }
-        //this is a vertical car
+            //this is a vertical car
         else {
             var changingYValue = leftBottom
             while (changingYValue <= rightTop) {
@@ -63,13 +63,51 @@ class Car {
         return false
     }
     
+    func move(direction: String) {
+        if (direction.elementsEqual("right") && isHorizontal) {
+            if (coordinates[coordinates.count - 1].x != 6) {
+                for coordinate in coordinates {
+                    coordinate.x += 1
+                }
+            } else {
+                print("Can't move there.")
+            }
+        } else if (direction.elementsEqual("left") && isHorizontal) {
+            if (coordinates[0].x != 1) {
+                for coordinate in coordinates {
+                    coordinate.x -= 1
+                }
+            } else {
+                print("Can't move there.")
+            }
+        } else if (direction.elementsEqual("up") && !isHorizontal) {
+            if (coordinates[coordinates.count - 1].y != 6) {
+                for coordinate in coordinates {
+                    coordinate.y += 1
+                }
+            } else {
+                print("Can't move there.")
+            }
+        } else if (direction.elementsEqual("down") && !isHorizontal) {
+            if (coordinates[0].y != 1) {
+                for coordinate in coordinates {
+                    coordinate.x -= 1
+                }
+            } else {
+                print("Can't move there.")
+            }
+        } else if (!(direction.elementsEqual("right") || direction.elementsEqual("left") || direction.elementsEqual("up") || direction.elementsEqual("down"))) {
+            print("Invalid direction parameter. (Coding error.)")
+        } else {
+            print("Car cannot move in that direction. (User error.)")
+        }
+        
+    }
 }
 
-struct Coordinate {
+class Coordinate {
     var x = 0
     var y = 0
-    
-    
     
     init(_ x: Int, _ y: Int) {
         self.x = x
