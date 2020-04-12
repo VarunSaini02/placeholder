@@ -60,6 +60,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
+    
+    @IBOutlet weak var slider: UISlider!
+    
     var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
     var imageNames = ["brown","green","purple","red"]
@@ -69,16 +72,18 @@ class ViewController: UIViewController {
     var cars = [Car]()
     var selected: Car?
     
+    var carNumber = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
         fillImageViewsAndTapRecognizers()
-        neutralGameBoard()
+        resetButtonPressed(self)
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
-        generator(4)
+        generator(carNumber)
     }
     
     //puts together the generator and the display functions
@@ -251,8 +256,10 @@ class ViewController: UIViewController {
         do {
             try selected?.move(direction: "right", cars: cars)
             updateCarsOnBoard()
-        } catch {
+        } catch CarMovement.levelComplete {
             resetButtonPressed(self)
+        } catch {
+            
         }
     }
     @IBAction func leftPressed(_ sender: Any) {
@@ -281,4 +288,9 @@ class ViewController: UIViewController {
         }
 
     }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        carNumber = Int(slider.value)
+    }
+    
 }
