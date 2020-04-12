@@ -16,6 +16,9 @@ class Car {
     var red: Double
     var green: Double
     var blue: Double
+    var alpha: Double
+    
+    var isSelected = false
     
     // This initializer makes sure that cars are never wider than 1 block. Cars can be oriented vertically or horizontally, but their two width coordinates (theConstant) are always the same.
     init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool,  _ red: Double, _ green: Double, _ blue: Double, _ alpha: Double) {
@@ -43,9 +46,31 @@ class Car {
         self.red = red
         self.green = green
         self.blue = blue
+        self.alpha = alpha
         
         color = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
     }
+    
+    func select() {
+        if isSelected == false {
+            red += 0.2
+            green += 0.2
+            blue += 0.2
+            color = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
+        }
+        isSelected = true
+    }
+    
+    func deselect() {
+        if isSelected == true {
+            red -= 0.2
+            green -= 0.2
+            blue -= 0.2
+            color = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
+        }
+        isSelected = false
+    }
+    
     
     func printCoordinates() {
         var text = "["
@@ -178,7 +203,7 @@ class Car {
 class CarInARush: Car {
     //this is the initial car that must escape traffic
     init() {
-        super.init(1, 2, 4, true, 0.0, 1.0, 1.0, 1.0)
+        super.init(1, 2, 4, true, 0.0, 0.8, 0.8, 1.0)
     }
 }
 
