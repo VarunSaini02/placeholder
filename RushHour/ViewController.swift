@@ -60,6 +60,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
     
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var carNumberLabel: UILabel!
+    
     var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
     var imageNames = ["brown","green","purple","red"]
@@ -69,16 +72,18 @@ class ViewController: UIViewController {
     var cars = [Car]()
     var selected: Car?
     
+    var carNumber = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
         // Do any additional setup after loading the view.
         fillImageViewsAndTapRecognizers()
-        neutralGameBoard()
+        resetButtonPressed(self)
     }
     
     @IBAction func resetButtonPressed(_ sender: Any) {
-        generator(4)
+        generator(carNumber)
     }
     
     //puts together the generator and the display functions
@@ -113,6 +118,9 @@ class ViewController: UIViewController {
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
         cars = [Car]()
+        cars.append(CarInARush())
+        cars[0].select()
+        
         whileloop: while cars.count < numberOfCars {
             let leftBottom = Int.random(in: 1...5)
             
@@ -122,10 +130,10 @@ class ViewController: UIViewController {
             
             let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
             
-            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...1), Double.random(in: 0.4...1), Double.random(in: 0.4...1), 1.0)
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), 1.0)
             
             for car in cars {
-                if temporaryCar.isTouching(car) {
+                if temporaryCar.isTouching(car) || (temporaryCar.isHorizontal && temporaryCar.coordinates[0].y == 4) {
                     continue whileloop
                 }
             }
@@ -241,25 +249,54 @@ class ViewController: UIViewController {
         for car in cars {
             if car.hasCoordinate(compare: coordinate) {
                 selected = car
+                car.select()
+            } else {
+                car.deselect()
             }
         }
+        updateCarsOnBoard()
     }
     
     @IBAction func rightPressed(_ sender: Any) {
-        selected?.move(direction: "right", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "right", cars: cars)
+            updateCarsOnBoard()
+        } catch CarMovement.levelComplete {
+            resetButtonPressed(self)
+        } catch {
+            
+        }
     }
     @IBAction func leftPressed(_ sender: Any) {
-        selected?.move(direction: "left", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "left", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
     }
     
     @IBAction func upPressed(_ sender: Any) {
-        selected?.move(direction: "up", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "up", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
     }
     @IBAction func downPressed(_ sender: Any) {
-        selected?.move(direction: "down", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "down", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
+
     }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        carNumber = Int(slider.value)
+        carNumberLabel.text = "\(carNumber) CARS"
+    }
+    
 }
