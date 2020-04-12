@@ -79,7 +79,7 @@ class Car {
         return false
     }
     
-    func move(direction: String, cars: [Car]) {
+    func move(direction: String, cars: [Car]) throws {
         
         var otherCars = cars
         var indexToRemove = 0
@@ -107,6 +107,8 @@ class Car {
                 } else {
                     print("Car in the way.")
                 }
+            } else if (indexToRemove == 0) {
+                throw CarMovement.levelComplete
             } else {
                 print("Can't move there.")
             }
@@ -173,6 +175,13 @@ class Car {
     }
 }
 
+class CarInARush: Car {
+    //this is the initial car that must escape traffic
+    init() {
+        super.init(1, 2, 4, true, 0.0, 1.0, 1.0, 1.0)
+    }
+}
+
 class Coordinate {
     var x = 0
     var y = 0
@@ -193,4 +202,10 @@ class Coordinate {
     func getString() -> String {
         return ("(\(x), \(y))")
     }
+}
+
+enum CarMovement: Error {
+    case collision
+    case levelComplete
+    //will add more later
 }

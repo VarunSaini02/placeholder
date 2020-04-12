@@ -113,6 +113,8 @@ class ViewController: UIViewController {
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
         cars = [Car]()
+        cars.append(CarInARush())
+        
         whileloop: while cars.count < numberOfCars {
             let leftBottom = Int.random(in: 1...5)
             
@@ -125,7 +127,7 @@ class ViewController: UIViewController {
             let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...1), Double.random(in: 0.4...1), Double.random(in: 0.4...1), 1.0)
             
             for car in cars {
-                if temporaryCar.isTouching(car) {
+                if temporaryCar.isTouching(car) || (temporaryCar.isHorizontal && temporaryCar.coordinates[0].y == 4) {
                     continue whileloop
                 }
             }
@@ -246,20 +248,37 @@ class ViewController: UIViewController {
     }
     
     @IBAction func rightPressed(_ sender: Any) {
-        selected?.move(direction: "right", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "right", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            resetButtonPressed(self)
+        }
     }
     @IBAction func leftPressed(_ sender: Any) {
-        selected?.move(direction: "left", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "left", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
     }
     
     @IBAction func upPressed(_ sender: Any) {
-        selected?.move(direction: "up", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "up", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
     }
     @IBAction func downPressed(_ sender: Any) {
-        selected?.move(direction: "down", cars: cars)
-        updateCarsOnBoard()
+        do {
+            try selected?.move(direction: "down", cars: cars)
+            updateCarsOnBoard()
+        } catch {
+            
+        }
+
     }
 }
