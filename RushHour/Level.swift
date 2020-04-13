@@ -17,3 +17,32 @@ class Level {
         self.finishLine = finishline
     }
 }
+
+struct Color {
+    var colorIndex = -1
+    let colorStrings =
+    [
+    "red",
+    "orange",
+    "green",
+    "purple",
+    "yellow",
+    "pink",
+    "cyan",
+    ]
+    
+    var UIC: UIColor
+    let UICs: [UIColor] = []
+    
+    
+    
+    init(_ color: String) {
+        for index in 0...(colorStrings.count - 1) {
+            if color.elementsEqual(colorStrings[index]) {
+                colorIndex = index
+            }
+        }
+        UIC = UICs[colorIndex]
+    }
+    
+}

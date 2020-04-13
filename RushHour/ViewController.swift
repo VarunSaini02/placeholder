@@ -166,8 +166,6 @@ class ViewController: UIViewController {
         }
         for index in 0...cars.count-1 {
             for coordinate in cars[index].coordinates {
-                //let color = imageNames[index % imageNames.count]
-                //ImageViews[coordinate.x - 1][coordinate.y - 1].image = UIImage(named: color)
                 ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color
             }
         }
