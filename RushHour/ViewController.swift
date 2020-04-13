@@ -132,9 +132,18 @@ class ViewController: UIViewController {
             
             let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), 1.0)
             
+            //throws out cars that make level not possible
             for car in cars {
                 if temporaryCar.isTouching(car) || (temporaryCar.isHorizontal && temporaryCar.coordinates[0].y == 4) {
                     continue whileloop
+                }
+                if (car.isHorizontal == temporaryCar.isHorizontal) {
+                    if (temporaryCar.isHorizontal == true && car.coordinates[0].y == temporaryCar.coordinates[0].y) {
+                        continue whileloop
+                    }
+                    if (temporaryCar.isHorizontal == false && car.coordinates[0].x == temporaryCar.coordinates[0].x) {
+                        continue whileloop
+                    }
                 }
             }
             cars.append(temporaryCar)
