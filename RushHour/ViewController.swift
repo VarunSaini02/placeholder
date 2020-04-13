@@ -121,7 +121,14 @@ class ViewController: UIViewController {
         cars.append(CarInARush())
         cars[0].select()
         
+        var counter = 0
         whileloop: while cars.count < numberOfCars {
+            counter += 1
+            if (counter > 100) {
+                resetButtonPressed(self)
+                break
+            }
+            
             let leftBottom = Int.random(in: 1...5)
             
             let rightTop = (leftBottom != 5) ? Int.random(in: (leftBottom + 1)...(leftBottom + 2)) : 6
