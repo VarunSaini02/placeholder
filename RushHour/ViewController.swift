@@ -65,14 +65,29 @@ class ViewController: UIViewController {
     
     var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
-    var imageNames = ["brown","green","purple","red"]
+    let colorStrings =
+    [
+        "red",
+        "orange",
+        "green",
+        "purple",
+        "yellow",
+        "pink",
+        "cyan",
+    ]
     
     var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     
+    //the Blueprint object that contains all pre-made levels
+    let blueprint = Blueprint()
+    
+    //array of cars that represents what is on the gameboard
     var cars = [Car]()
+    //the highlighted (tapped) car
     var selected: Car?
     
     var carNumber = 4
+    var a = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,7 +152,7 @@ class ViewController: UIViewController {
             
             let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
             
-            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), 1.0)
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, colorStrings[Int.random(in: 0...colorStrings.count - 1)])
             
             //throws out cars that make level not possible
             for car in cars {
@@ -166,7 +181,7 @@ class ViewController: UIViewController {
         }
         for index in 0...cars.count-1 {
             for coordinate in cars[index].coordinates {
-                ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color
+                ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color.UIC
             }
         }
     }
