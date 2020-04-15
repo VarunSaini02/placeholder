@@ -10,11 +10,16 @@ import UIKit
 
 //contains every pre-made level
 struct Blueprint {
-    init(difficulty: Int, level: Int) {
-        
+    let levels = [[[[Car]]]]()
+    
+    init() {
+        fillLevels()
     }
     
-    
+    // huge block of code that defines all the pre-made levels
+    func fillLevels() {
+        
+    }
 }
 
 class Color {

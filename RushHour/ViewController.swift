@@ -78,6 +78,7 @@ class ViewController: UIViewController {
     
     var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     
+    let blueprint = Blueprint()
     var cars = [Car]()
     var selected: Car?
     
