@@ -65,7 +65,16 @@ class ViewController: UIViewController {
     
     var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
-    var imageNames = ["brown","green","purple","red"]
+    let colorStrings =
+    [
+        "red",
+        "orange",
+        "green",
+        "purple",
+        "yellow",
+        "pink",
+        "cyan",
+    ]
     
     var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     
@@ -137,7 +146,7 @@ class ViewController: UIViewController {
             
             let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
             
-            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), Double.random(in: 0.4...0.8), 1.0)
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, colorStrings[Int.random(in: 0...colorStrings.count - 1)])
             
             //throws out cars that make level not possible
             for car in cars {
@@ -166,7 +175,7 @@ class ViewController: UIViewController {
         }
         for index in 0...cars.count-1 {
             for coordinate in cars[index].coordinates {
-                ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color
+                ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color.UIC
             }
         }
     }
