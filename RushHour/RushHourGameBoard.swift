@@ -8,15 +8,7 @@
 
 import UIKit
 
-
-//Need outlets and actions for every image :(
-//Need half yellow, half (ANY CAR COLOR/GRAY) image to show exit?
-//Need isSelected version of each image
-//might be good to categorize images by car type
-//Car swift class?
-
-
-class ViewController: UIViewController {
+class RushHourGameBoard: UIViewController {
     
     @IBOutlet weak var x1y1: UIImageView!
     @IBOutlet weak var x2y1: UIImageView!
