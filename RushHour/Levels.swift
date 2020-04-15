@@ -1,5 +1,5 @@
 //
-//  Level.swift
+//  Levels.swift
 //  RushHour
 //
 //  Created by Blake Branvold and Varun Saini on 4/11/20.
@@ -8,14 +8,13 @@
 
 import UIKit
 
-class Level {
-    var cars: [Car]
-    var finishLine: Coordinate
-    
-    init(_ cars: [Car], _ finishline: Coordinate) {
-        self.cars = cars
-        self.finishLine = finishline
+//contains every pre-made level
+struct Blueprint {
+    init(difficulty: Int, level: Int) {
+        
     }
+    
+    
 }
 
 class Color {

@@ -15,7 +15,7 @@
 		9EB13524243CFF420097917A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EB13522243CFF420097917A /* LaunchScreen.storyboard */; };
 		9EB1352F243CFF430097917A /* RushHourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1352E243CFF430097917A /* RushHourTests.swift */; };
 		9EB1353A243CFF430097917A /* RushHourUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB13539243CFF430097917A /* RushHourUITests.swift */; };
-		EF7C7A852442ACC900DCA088 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7C7A842442ACC900DCA088 /* Level.swift */; };
+		EF7C7A852442ACC900DCA088 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7C7A842442ACC900DCA088 /* Levels.swift */; };
 		EF7C7A872442AD0900DCA088 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7C7A862442AD0900DCA088 /* Car.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +51,7 @@
 		9EB13535243CFF430097917A /* RushHourUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RushHourUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EB13539243CFF430097917A /* RushHourUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RushHourUITests.swift; sourceTree = "<group>"; };
 		9EB1353B243CFF430097917A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF7C7A842442ACC900DCA088 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		EF7C7A842442ACC900DCA088 /* Levels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		EF7C7A862442AD0900DCA088 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,7 +107,7 @@
 				9EB13519243CFF3F0097917A /* SceneDelegate.swift */,
 				9EB1351B243CFF3F0097917A /* ViewController.swift */,
 				EF7C7A862442AD0900DCA088 /* Car.swift */,
-				EF7C7A842442ACC900DCA088 /* Level.swift */,
+				EF7C7A842442ACC900DCA088 /* Levels.swift */,
 				9EB1351D243CFF3F0097917A /* Main.storyboard */,
 				9EB13520243CFF420097917A /* Assets.xcassets */,
 				9EB13522243CFF420097917A /* LaunchScreen.storyboard */,
@@ -268,7 +268,7 @@
 				9EB1351C243CFF3F0097917A /* ViewController.swift in Sources */,
 				9EB13518243CFF3F0097917A /* AppDelegate.swift in Sources */,
 				EF7C7A872442AD0900DCA088 /* Car.swift in Sources */,
-				EF7C7A852442ACC900DCA088 /* Level.swift in Sources */,
+				EF7C7A852442ACC900DCA088 /* Levels.swift in Sources */,
 				9EB1351A243CFF3F0097917A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
