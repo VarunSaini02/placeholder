@@ -73,6 +73,7 @@ class ViewController: UIViewController {
     var selected: Car?
     
     var carNumber = 4
+    var a = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
