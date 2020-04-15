@@ -78,8 +78,12 @@ class ViewController: UIViewController {
     
     var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     
+    //the Blueprint object that contains all pre-made levels
     let blueprint = Blueprint()
+    
+    //array of cars that represents what is on the gameboard
     var cars = [Car]()
+    //the highlighted (tapped) car
     var selected: Car?
     
     var carNumber = 4

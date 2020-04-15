@@ -8,7 +8,7 @@
 
 import UIKit
 
-//contains every pre-made level
+//contains all pre-made levels
 struct Blueprint {
     let levels = [[[[Car]]]]()
     
