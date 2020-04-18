@@ -10,14 +10,26 @@ import UIKit
 
 class RushHourMenu: UIViewController {
     
-    /*
-        Delete this comment after reading it, Blake.
-        I pulled your branch from Github, but it didn't seem to have the View Controller
-        that you were working on. I guess it didn't commit properly? So, I just made
-        blank View Controller called Rush Hour Menu Scene, and you can put everything
-        you were working on in there. It is connected to the Navigation Controller but
-        is not linked to the Rush Hour Game Board Scene View Controller, which is the
-        renamed version of our old View Controller.
-    */
+    @IBOutlet weak var levelStepper: UIStepper!
+    @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var carSlider: UISlider!
+    @IBOutlet weak var carLabel: UILabel!
+    @IBOutlet weak var levelTypeSwitch: UISwitch!
+    
+    @IBAction func levelTypeSwitchActivated(_ sender: Any) {
+        
+        if levelTypeSwitch.isOn{
+            levelLabel.isHidden = true
+            levelStepper.isHidden = true
+            carLabel.isHidden = false
+            carSlider.isHidden = false
+        } else {
+            levelLabel.isHidden = false
+            levelStepper.isHidden = false
+            carLabel.isHidden = true
+            carSlider.isHidden = true
+        }
+        
+    }
     
 }
