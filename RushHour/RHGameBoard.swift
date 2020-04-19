@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RushHourGameBoard: UIViewController {
+class RHGameBoard: UIViewController {
     
     @IBOutlet weak var x1y1: UIImageView!
     @IBOutlet weak var x2y1: UIImageView!
@@ -51,9 +51,7 @@ class RushHourGameBoard: UIViewController {
     @IBOutlet weak var x4y6: UIImageView!
     @IBOutlet weak var x5y6: UIImageView!
     @IBOutlet weak var x6y6: UIImageView!
-    
-    @IBOutlet weak var slider: UISlider!
-    @IBOutlet weak var carNumberLabel: UILabel!
+
     
     var TapRecognizers = [[UITapGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
@@ -312,12 +310,6 @@ class RushHourGameBoard: UIViewController {
         } catch {
             
         }
-
-    }
-    
-    @IBAction func sliderChanged(_ sender: Any) {
-        carNumber = Int(slider.value)
-        carNumberLabel.text = "\(carNumber) CARS"
     }
     
 }
