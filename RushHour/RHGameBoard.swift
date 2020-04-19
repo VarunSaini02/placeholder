@@ -68,9 +68,6 @@ class RHGameBoard: UIViewController {
     
     var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     
-    //the Blueprint object that contains all pre-made levels
-    let blueprint = Blueprint()
-    
     //array of cars that represents what is on the gameboard
     var cars = [Car]()
     //the highlighted (tapped) car
@@ -94,7 +91,8 @@ class RHGameBoard: UIViewController {
     //puts together the generator and the display functions
     func generator(_ numberOfCars: Int) {
         neutralGameBoard()
-        generateCars(numberOfCars)
+        //generateCars(numberOfCars)
+        buildBlueprint(blueprint: Blueprint().levels[0][0][0])
         selected = cars[0]
         
         for car in cars {
@@ -120,16 +118,20 @@ class RHGameBoard: UIViewController {
         background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
     }
     
+    func buildBlueprint(blueprint: [Car]) {
+        cars = [Car]()
+        cars = blueprint
+    }
+    
     //generates non-user cars that do not overlap. numberOfCars is how many are generated.
     func generateCars(_ numberOfCars: Int) {
         cars = [Car]()
-        cars.append(CarInARush())
-        cars[0].select()
+        cars.append(Car(1, 2, 4, true, Color("cyan")))
         
-        var counter = 0
+        var counterCarOverload = 0
         whileloop: while cars.count < numberOfCars {
-            counter += 1
-            if (counter > 100) {
+            counterCarOverload += 1
+            if (counterCarOverload > 100) {
                 resetButtonPressed(self)
                 break
             }
@@ -142,7 +144,9 @@ class RHGameBoard: UIViewController {
             
             let isHorizontal = (Int.random(in: 0...1) == 1) ? true : false
             
-            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, colorStrings[Int.random(in: 0...colorStrings.count - 1)])
+            //var temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Color(colorStrings[Int.random(in: 0...colorStrings.count - 1)]))
+            
+            let temporaryCar = Car(leftBottom, rightTop, constant, isHorizontal, Color())
             
             //throws out cars that make level not possible
             for car in cars {
@@ -157,9 +161,13 @@ class RHGameBoard: UIViewController {
                         continue whileloop
                     }
                 }
+                if (car.color.isTooSimilar(temporaryCar.color, CGFloat(0.25))) {
+                    continue whileloop
+                }
             }
             cars.append(temporaryCar)
         }
+        cars[0].select()
     }
     
     func updateCarsOnBoard() {
@@ -268,7 +276,9 @@ class RHGameBoard: UIViewController {
         for car in cars {
             if car.hasCoordinate(compare: coordinate) {
                 selected = car
+                car.color.display()
                 car.select()
+                car.color.display()
             } else {
                 car.deselect()
             }
