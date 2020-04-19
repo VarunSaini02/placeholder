@@ -16,7 +16,7 @@ class Car {
     var isSelected = false
     
     // This initializer makes sure that cars are never wider than 1 block. Cars can be oriented vertically or horizontally, but their two width coordinates (theConstant) are always the same.
-    init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool, _ color: String) {
+    init(_ leftBottom: Int, _ rightTop: Int, _ constant: Int, _ isHorizontal: Bool, _ color: Color) {
         
         self.isHorizontal = isHorizontal
         coordinates = [Coordinate]()
@@ -38,7 +38,7 @@ class Car {
             }
         }
         
-        self.color = Color(color)
+        self.color = color
 
     }
     
@@ -182,14 +182,28 @@ class Car {
         } else {
             print("Car cannot move in that direction. (User error.)")
         }
-        
     }
-}
-
-class CarInARush: Car {
-    //this is the initial car that must escape traffic
-    init() {
-        super.init(1, 2, 4, true, "cyan")
+    
+    //fixes color of Car
+    func fix(cars: [Car]) -> Car {
+        var needsFixing = false
+        for car in cars {
+            if car.color.isTooSimilar(self.color, 0.25) {
+                needsFixing = true
+            }
+        }
+        if needsFixing {
+            while needsFixing {
+                needsFixing = false
+                self.color = Color()
+                for car in cars {
+                    if car.color.isTooSimilar(self.color, 0.25) {
+                        needsFixing = true
+                    }
+                }
+            }
+        }
+        return self
     }
 }
 
