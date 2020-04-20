@@ -61,6 +61,35 @@ class Blueprint {
         addCarToLevel(level: 2, startCoord: 3, endCoord: 4, oppCoord: 5, isNotFlipped: false)
         addCarToLevel(level: 2, startCoord: 3, endCoord: 5, oppCoord: 6, isNotFlipped: false)
         
+        //Level 3
+        addCarToLevel(level: 3, startCoord: 2, endCoord: 3, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        addCarToLevel(level: 3, startCoord: 2, endCoord: 3, oppCoord: 3, isNotFlipped: true)
+        addCarToLevel(level: 3, startCoord: 3, endCoord: 4, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 3, startCoord: 1, endCoord: 2, oppCoord: 2, isNotFlipped: false)
+        addCarToLevel(level: 3, startCoord: 2, endCoord: 4, oppCoord: 4, isNotFlipped: false)
+        addCarToLevel(level: 3, startCoord: 1, endCoord: 3, oppCoord: 6, isNotFlipped: false)
+        
+        //Level 4
+        addCarToLevel(level: 4, startCoord: 2, endCoord: 3, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        addCarToLevel(level: 4, startCoord: 3, endCoord: 5, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 4, startCoord: 4, endCoord: 6, oppCoord: 3, isNotFlipped: true)
+        addCarToLevel(level: 4, startCoord: 4, endCoord: 6, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 4, startCoord: 2, endCoord: 3, oppCoord: 3, isNotFlipped: false)
+        addCarToLevel(level: 4, startCoord: 4, endCoord: 6, oppCoord: 4, isNotFlipped: false)
+        addCarToLevel(level: 4, startCoord: 1, endCoord: 2, oppCoord: 6, isNotFlipped: false)
+        
+        //Level 5
+        addCarToLevel(level: 5, startCoord: 2, endCoord: 3, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        addCarToLevel(level: 5, startCoord: 1, endCoord: 2, oppCoord: 6, isNotFlipped: true)
+        addCarToLevel(level: 5, startCoord: 2, endCoord: 4, oppCoord: 3, isNotFlipped: true)
+        addCarToLevel(level: 5, startCoord: 5, endCoord: 6, oppCoord: 2, isNotFlipped: true)
+        addCarToLevel(level: 5, startCoord: 5, endCoord: 6, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 5, startCoord: 3, endCoord: 5, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 5, startCoord: 1, endCoord: 2, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 5, startCoord: 4, endCoord: 6, oppCoord: 4, isNotFlipped: false)
+        addCarToLevel(level: 5, startCoord: 3, endCoord: 5, oppCoord: 5, isNotFlipped: false)
+        addCarToLevel(level: 5, startCoord: 5, endCoord: 6, oppCoord: 6, isNotFlipped: false)
+        addCarToLevel(level: 5, startCoord: 3, endCoord: 4, oppCoord: 6, isNotFlipped: false)
     }
     
     func addCarToLevel(package: Int = 0, difficulty: Int = 0, level: Int, startCoord: Int, endCoord: Int, oppCoord: Int, isNotFlipped: Bool, isFirstCar: Bool = false){
