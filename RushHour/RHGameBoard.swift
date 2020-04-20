@@ -92,7 +92,7 @@ class RHGameBoard: UIViewController {
     func generator(_ numberOfCars: Int) {
         neutralGameBoard()
         //generateCars(numberOfCars)
-        buildBlueprint(blueprint: Blueprint().levels[0][0][0])
+        buildBlueprint(blueprint: Blueprint().levels[0][0][1])
         selected = cars[0]
         
         for car in cars {

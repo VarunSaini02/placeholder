@@ -50,6 +50,16 @@ class Blueprint {
         
         //Level 2
         addCarToLevel(level: 2, startCoord: 1, endCoord: 2, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        addCarToLevel(level: 2, startCoord: 1, endCoord: 3, oppCoord: 3, isNotFlipped: true)
+        addCarToLevel(level: 2, startCoord: 1, endCoord: 2, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 2, startCoord: 4, endCoord: 6, oppCoord: 6, isNotFlipped: true)
+        addCarToLevel(level: 2, startCoord: 4, endCoord: 5, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 2, startCoord: 5, endCoord: 6, oppCoord: 2, isNotFlipped: true)
+        addCarToLevel(level: 2, startCoord: 5, endCoord: 6, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 2, startCoord: 1, endCoord: 2, oppCoord: 3, isNotFlipped: false)
+        addCarToLevel(level: 2, startCoord: 4, endCoord: 5, oppCoord: 4, isNotFlipped: false)
+        addCarToLevel(level: 2, startCoord: 3, endCoord: 4, oppCoord: 5, isNotFlipped: false)
+        addCarToLevel(level: 2, startCoord: 3, endCoord: 5, oppCoord: 6, isNotFlipped: false)
         
     }
     
