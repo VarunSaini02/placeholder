@@ -36,14 +36,33 @@ class Blueprint {
         }
 
         //the cars array for Package: levels[0], Difficulty: levels[0][0], and Level: levels[0][0][0].
-        levels[0][0][0].append(Car(2, 3, 4, true, Color("cyan")))
-        levels[0][0][0].append(Car(1, 2, 6, true, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(3, 5, 1, false, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(1, 2, 1, false, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(3, 5, 1, true, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(3, 5, 4, false, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(5, 6, 2, true, Color()).fix(cars: levels[0][0][0]))
-        levels[0][0][0].append(Car(4, 6, 6, false, Color()).fix(cars: levels[0][0][0]))
+
+        
+        //Level 1
+        addCarToLevel(level: 1, startCoord: 2, endCoord: 3, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        addCarToLevel(level: 1, startCoord: 1, endCoord: 2, oppCoord: 6, isNotFlipped: true)
+        addCarToLevel(level: 1, startCoord: 3, endCoord: 5, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 1, startCoord: 1, endCoord: 2, oppCoord: 1, isNotFlipped: false)
+        addCarToLevel(level: 1, startCoord: 3, endCoord: 5, oppCoord: 1, isNotFlipped: true)
+        addCarToLevel(level: 1, startCoord: 3, endCoord: 5, oppCoord: 4, isNotFlipped: false)
+        addCarToLevel(level: 1, startCoord: 5, endCoord: 6, oppCoord: 2, isNotFlipped: true)
+        addCarToLevel(level: 1, startCoord: 4, endCoord: 6, oppCoord: 6, isNotFlipped: false)
+        
+        //Level 2
+        addCarToLevel(level: 2, startCoord: 1, endCoord: 2, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
+        
+    }
+    
+    func addCarToLevel(package: Int = 0, difficulty: Int = 0, level: Int, startCoord: Int, endCoord: Int, oppCoord: Int, isNotFlipped: Bool, isFirstCar: Bool = false){
+        if (isFirstCar){
+            
+        levels[package][difficulty][level-1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color("cyan")))
+            
+        } else{
+            
+        levels[package][difficulty][level-1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color()).fix(cars: levels[package][difficulty][level-1]))
+            
+        }
     }
 
 }
@@ -151,4 +170,5 @@ class Color {
     func display() {
         print("[\(red), \(green), \(blue)]")
     }
+    
 }
