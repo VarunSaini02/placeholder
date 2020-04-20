@@ -76,6 +76,9 @@ class RHGameBoard: UIViewController {
     var carNumber = 4
     var a = 1
     
+    var isRandomGenerated = false
+    var levelToBuild = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Starting!")
@@ -91,8 +94,11 @@ class RHGameBoard: UIViewController {
     //puts together the generator and the display functions
     func generator(_ numberOfCars: Int) {
         neutralGameBoard()
-        //generateCars(numberOfCars)
-        buildBlueprint(blueprint: Blueprint().levels[0][0][0])
+        if isRandomGenerated {
+            generateCars(numberOfCars)
+        } else {
+            buildBlueprint(blueprint: Blueprint().levels[0][0][levelToBuild - 1])
+        }
         selected = cars[0]
         
         for car in cars {

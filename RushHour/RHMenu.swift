@@ -47,6 +47,11 @@ class RHMenu: UIViewController {
         }
     }
     
+    @IBAction func stepperPressed(_ sender: Any) {
+        levelLabel.text = "LEVEL \(Int(levelStepper.value))"
+    }
+    
+    
     @IBAction func sliderChanged(_ sender: Any) {
         carLabel.text = "\(Int(carSlider.value)) CARS"
     }
@@ -58,5 +63,7 @@ class RHMenu: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let gameBoard = segue.destination as! RHGameBoard
         gameBoard.carNumber = Int(carSlider.value)
+        gameBoard.isRandomGenerated = levelTypeSwitch.isOn
+        gameBoard.levelToBuild = Int(levelStepper.value)
     }
 }
