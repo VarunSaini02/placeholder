@@ -282,9 +282,9 @@ class RHGameBoard: UIViewController {
         for car in cars {
             if car.hasCoordinate(compare: coordinate) {
                 selected = car
-                car.color.display()
+                //car.color.display()
                 car.select()
-                car.color.display()
+                //car.color.display()
             } else {
                 car.deselect()
             }
@@ -296,8 +296,11 @@ class RHGameBoard: UIViewController {
         do {
             try selected?.move(direction: "right", cars: cars)
             updateCarsOnBoard()
-        } catch CarMovement.levelComplete {
-            resetButtonPressed(self)
+        } catch let error as LocalizedError {
+            print(error.localizedDescription)
+            if error.localizedDescription.elementsEqual("Level has been completed!") {
+                resetButtonPressed(self)
+            }
         } catch {
             
         }
@@ -306,6 +309,8 @@ class RHGameBoard: UIViewController {
         do {
             try selected?.move(direction: "left", cars: cars)
             updateCarsOnBoard()
+        } catch let error as LocalizedError {
+            print(error.localizedDescription)
         } catch {
             
         }
@@ -315,6 +320,8 @@ class RHGameBoard: UIViewController {
         do {
             try selected?.move(direction: "up", cars: cars)
             updateCarsOnBoard()
+        } catch let error as LocalizedError {
+            print(error.localizedDescription)
         } catch {
             
         }
@@ -323,6 +330,8 @@ class RHGameBoard: UIViewController {
         do {
             try selected?.move(direction: "down", cars: cars)
             updateCarsOnBoard()
+        } catch let error as LocalizedError {
+            print(error.localizedDescription)
         } catch {
             
         }
