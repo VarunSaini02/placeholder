@@ -34,9 +34,9 @@ class Blueprint {
                 }
             }
         }
-
+        
         //the cars array for Package: levels[0], Difficulty: levels[0][0], and Level: levels[0][0][0].
-
+        
         
         //Level 1
         addCarToLevel(level: 1, startCoord: 2, endCoord: 3, oppCoord: 4, isNotFlipped: true, isFirstCar: true)
@@ -160,18 +160,34 @@ class Blueprint {
         addCarToLevel(level: 10, startCoord: 3, endCoord: 5, oppCoord: 6, isNotFlipped: false)
     }
     
-    func addCarToLevel(package: Int = 0, difficulty: Int = 0, level: Int, startCoord: Int, endCoord: Int, oppCoord: Int, isNotFlipped: Bool, isFirstCar: Bool = false){
+    func addCarToLevel(package: Int = 1, difficulty: Int = 1, level: Int, startCoord: Int, endCoord: Int, oppCoord: Int, isNotFlipped: Bool, isFirstCar: Bool = false){
         if (isFirstCar){
             
-        levels[package][difficulty][level-1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color("cyan")))
+            levels[package - 1][difficulty - 1][level - 1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color("cyan")))
             
         } else{
             
-        levels[package][difficulty][level-1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color()).fix(cars: levels[package][difficulty][level-1]))
-            
+            levels[package - 1][difficulty - 1][level - 1].append(Car(startCoord, endCoord, oppCoord, isNotFlipped, Color()))
         }
+        
+        levels[package - 1][difficulty - 1][level - 1] = fix(cars: levels[package - 1][difficulty - 1][level - 1])
     }
-
+    
+    func fix(cars: [Car]) -> [Car] {
+        var usedIndices = [Int]()
+        let fixedCars = cars
+        for index in 0...fixedCars.count - 1 {
+            var random = Int.random(in: 0...Color().distinctColors255.count - 1)
+            while usedIndices.contains(random) {
+                random = Int.random(in: 0...Color().distinctColors255.count - 1)
+            }
+            usedIndices.append(random)
+            fixedCars[index].color = Color(random)
+        }
+        fixedCars[0].color = Color("cyan")
+        return fixedCars
+    }
+    
 }
 
 class Color {
@@ -182,28 +198,55 @@ class Color {
     var isHighlighted = false
     
     var colorIndex = -1
+    var distinctColorIndex = -1
+    
     let colorStrings =
-    [
-        "red",
-        "orange",
-        "green",
-        "purple",
-        "yellow",
-        "pink",
-        "cyan",
+        [
+            "red",
+            "orange",
+            "green",
+            "purple",
+            "yellow",
+            "pink",
+            "cyan",
     ]
     
     var UIC: UIColor
     let UICs: [[CGFloat]] =
-    [
-        //RGB values scaled down to 0.0 – 1.0
-        [0.8, 0.0, 0.0],
-        [0.8, 0.4, 0.0],
-        [0.0, 0.8, 0.0],
-        [0.5, 0.0, 0.5],
-        [0.8, 0.8, 0.0],
-        [0.8, 0.0, 0.8],
-        [0.0, 0.8, 0.8]
+        [
+            //RGB values scaled down to 0.0 – 1.0
+            [0.8, 0.0, 0.0],
+            [0.8, 0.4, 0.0],
+            [0.0, 0.8, 0.0],
+            [0.5, 0.0, 0.5],
+            [0.8, 0.8, 0.0],
+            [0.8, 0.0, 0.8],
+            [0.0, 0.8, 0.8]
+    ]
+    
+    let distinctColors255: [[CGFloat]] =
+        [
+            [255, 0, 0],
+            [255, 127, 0],
+            [255, 212, 0],
+            [255, 255, 0],
+            [191, 255, 0],
+            [106, 255, 0],
+            [0, 234, 255],
+            [0, 149, 255],
+            [0, 64, 255],
+            [170, 0, 255],
+            [255, 0, 170],
+            [237, 185, 185],
+            [231, 233, 185],
+            [185, 237, 224],
+            [185, 215, 237],
+            [220, 185, 237],
+            [143, 52, 52],
+            [143, 106, 52],
+            [79, 143, 52],
+            [35, 98, 143],
+            [107, 52, 143]
     ]
     
     
@@ -218,35 +261,51 @@ class Color {
         green = UICs[colorIndex][1]
         blue = UICs[colorIndex][2]
         UIC = UIColor(red: UICs[colorIndex][0], green: UICs[colorIndex][1], blue: UICs[colorIndex][2], alpha: 1.0)
+        
+        if color.elementsEqual("random") {
+            let whichIsZero = Int.random(in: 1...7)
+            
+            red = CGFloat.random(in: 0.5...0.8)
+            green = CGFloat.random(in: 0.5...0.8)
+            blue = CGFloat.random(in: 0.5...0.8)
+            
+            switch whichIsZero {
+            case 1:
+                red = CGFloat(0.0)
+            case 2:
+                green = CGFloat(0.0)
+            case 3:
+                blue = CGFloat(0.0)
+            case 4:
+                red = CGFloat(0.0)
+                green = CGFloat(0.0)
+            case 5:
+                green = CGFloat(0.0)
+                blue = CGFloat(0.0)
+            case 6:
+                blue = CGFloat(0.0)
+                red = CGFloat(0.0)
+            default:
+                break
+            }
+            
+            UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        }
     }
     
     init() {
-        let whichIsZero = Int.random(in: 1...7)
-        
-        red = CGFloat.random(in: 0.5...0.8)
-        green = CGFloat.random(in: 0.5...0.8)
-        blue = CGFloat.random(in: 0.5...0.8)
-        
-        switch whichIsZero {
-        case 1:
-            red = CGFloat(0.0)
-        case 2:
-            green = CGFloat(0.0)
-        case 3:
-            blue = CGFloat(0.0)
-        case 4:
-            red = CGFloat(0.0)
-            green = CGFloat(0.0)
-        case 5:
-            green = CGFloat(0.0)
-            blue = CGFloat(0.0)
-        case 6:
-            blue = CGFloat(0.0)
-            red = CGFloat(0.0)
-        default:
-            break
-        }
-        
+        distinctColorIndex = Int.random(in: 0...distinctColors255.count - 1)
+        red = distinctColors255[distinctColorIndex][0]/255 == 0.0 ? 0.0 : distinctColors255[distinctColorIndex][0]/255 - 0.2
+        green = distinctColors255[distinctColorIndex][1]/255 == 0.0 ? 0.0 : distinctColors255[distinctColorIndex][1]/255 - 0.2
+        blue = distinctColors255[distinctColorIndex][2]/255 == 0 ? 0 : distinctColors255[distinctColorIndex][2]/255 - 0.2
+        UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+    
+    init(_ presetColorIndex: Int) {
+        distinctColorIndex = presetColorIndex
+        red = distinctColors255[distinctColorIndex][0]/255 == 0 ? 0 : distinctColors255[distinctColorIndex][0]/255 - 0.2
+        green = distinctColors255[distinctColorIndex][1]/255 == 0 ? 0 : distinctColors255[distinctColorIndex][1]/255 - 0.2
+        blue = distinctColors255[distinctColorIndex][2]/255 == 0 ? 0 : distinctColors255[distinctColorIndex][2]/255 - 0.2
         UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
     

@@ -39,7 +39,7 @@ class Car {
         }
         
         self.color = color
-
+        
     }
     
     
@@ -57,7 +57,6 @@ class Car {
         isSelected = false
     }
     
-    
     func printCoordinates() {
         var text = "["
         for index in 0...coordinates.count - 1 {
@@ -68,6 +67,18 @@ class Car {
             }
         }
         print(text)
+    }
+    
+    func getCoordinates() -> String {
+        var text = "["
+        for index in 0...coordinates.count - 1 {
+            if index == (coordinates.count - 1) {
+                text.append(coordinates[index].getString() + "]")
+            } else {
+                text.append(coordinates[index].getString() + "; ")
+            }
+        }
+        return text
     }
     
     func hasCoordinate(compare: Coordinate) -> Bool {
@@ -101,6 +112,8 @@ class Car {
             }
         }
         
+        var collisionCar: Car?
+        
         otherCars.remove(at: indexToRemove)
         
         if (direction.elementsEqual("right") && isHorizontal) {
@@ -109,6 +122,7 @@ class Car {
                 for car in otherCars {
                     if car.hasCoordinate(compare: Coordinate(coordinates[coordinates.count - 1].x + 1, coordinates[coordinates.count - 1].y)) {
                         willBeCollision = true
+                        collisionCar = car
                     }
                 }
                 if (willBeCollision == false) {
@@ -116,12 +130,12 @@ class Car {
                         coordinate.x += 1
                     }
                 } else {
-                    print("Car in the way.")
+                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
                 }
             } else if (indexToRemove == 0) {
-                throw CarMovement.levelComplete
+                throw CarInfo.levelComplete
             } else {
-                print("Can't move there.")
+                throw CarInfo.hitWall(movingCar: self, direction: direction)
             }
         } else if (direction.elementsEqual("left") && isHorizontal) {
             if (coordinates[0].x != 1) {
@@ -129,6 +143,7 @@ class Car {
                 for car in otherCars {
                     if car.hasCoordinate(compare: Coordinate(coordinates[0].x - 1, coordinates[0].y)) {
                         willBeCollision = true
+                        collisionCar = car
                     }
                 }
                 if (willBeCollision == false) {
@@ -136,10 +151,10 @@ class Car {
                         coordinate.x -= 1
                     }
                 } else {
-                    print("Car in the way.")
+                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
                 }
             } else {
-                print("Can't move there.")
+                throw CarInfo.hitWall(movingCar: self, direction: direction)
             }
         } else if (direction.elementsEqual("up") && !isHorizontal) {
             if (coordinates[coordinates.count - 1].y != 6) {
@@ -147,6 +162,7 @@ class Car {
                 for car in otherCars {
                     if car.hasCoordinate(compare: Coordinate(coordinates[coordinates.count - 1].x, coordinates[coordinates.count - 1].y + 1)) {
                         willBeCollision = true
+                        collisionCar = car
                     }
                 }
                 if (willBeCollision == false) {
@@ -154,10 +170,10 @@ class Car {
                         coordinate.y += 1
                     }
                 } else {
-                    print("Car in the way.")
+                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
                 }
             } else {
-                print("Can't move there.")
+                throw CarInfo.hitWall(movingCar: self, direction: direction)
             }
         } else if (direction.elementsEqual("down") && !isHorizontal) {
             if (coordinates[0].y != 1) {
@@ -165,6 +181,7 @@ class Car {
                 for car in otherCars {
                     if car.hasCoordinate(compare: Coordinate(coordinates[0].x, coordinates[0].y - 1)) {
                         willBeCollision = true
+                        collisionCar = car
                     }
                 }
                 if (willBeCollision == false) {
@@ -172,40 +189,19 @@ class Car {
                         coordinate.y -= 1
                     }
                 } else {
-                    print("Car in the way.")
+                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
                 }
             } else {
-                print("Can't move there.")
+                throw CarInfo.hitWall(movingCar: self, direction: direction)
             }
         } else if (!(direction.elementsEqual("right") || direction.elementsEqual("left") || direction.elementsEqual("up") || direction.elementsEqual("down"))) {
-            print("Invalid direction parameter. (Coding error.)")
+            throw CarInfo.codingError(movingCar: self, invalidDirection: direction)
         } else {
-            print("Car cannot move in that direction. (User error.)")
+            //vertical car going right/left or horizontal car going up/down
+            throw CarInfo.invalidDirection(movingCar: self, direction: direction)
         }
     }
-    
-    //fixes color of Car
-    func fix(cars: [Car]) -> Car {
-        var needsFixing = false
-        for car in cars {
-            if car.color.isTooSimilar(self.color, 0.25) {
-                needsFixing = true
-            }
-        }
-        if needsFixing {
-            while needsFixing {
-                needsFixing = false
-                self.color = Color()
-                for car in cars {
-                    if car.color.isTooSimilar(self.color, 0.25) {
-                        needsFixing = true
-                    }
-                }
-            }
-        }
-        return self
-    }
-}
+ }
 
 class Coordinate {
     var x = 0
@@ -229,8 +225,28 @@ class Coordinate {
     }
 }
 
-enum CarMovement: Error {
-    case collision
+enum CarInfo: Error {
+    case carsCollided(movingCar: Car, unmovingCar: Car)
     case levelComplete
-    //will add more later
+    case hitWall(movingCar: Car, direction: String)
+    case invalidDirection(movingCar: Car, direction: String)
+    case codingError(movingCar: Car, invalidDirection: String)
+}
+
+extension CarInfo: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .carsCollided(let moving, let unmoving):
+            return ("Car: \(moving.getCoordinates()) attempted a collision with Car: \(unmoving.getCoordinates()).")
+        case .levelComplete:
+            return ("Level has been completed!")
+        case .hitWall(let movingCar, let direction):
+            return ("Car: \(movingCar.getCoordinates()) attempted a collision with the \(direction) wall.")
+        case .invalidDirection(let movingCar, let direction):
+            let isOrNot = movingCar.isHorizontal ? "is a horizontal" : "is a vertical"
+            return ("Car: \(movingCar.getCoordinates()) attempted to move \(direction) but \(isOrNot) car.")
+        case .codingError(let movingCar, let invalidDirection):
+            return ("Idiot programmers tried to make Car: \(movingCar.getCoordinates()) move in the \"\(invalidDirection)\" direction. Sad!")
+        }
+    }
 }
