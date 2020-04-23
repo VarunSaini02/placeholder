@@ -66,7 +66,7 @@ class RHGameBoard: UIViewController {
         "cyan",
     ]
     
-    var background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
+    var background = UIColor(red: CGFloat.random(in: 0.1...0.3), green: CGFloat.random(in: 0.1...0.3), blue: CGFloat.random(in: 0.1...0.3), alpha: 1.0)
     
     //array of cars that represents what is on the gameboard
     var cars = [Car]()
@@ -121,7 +121,7 @@ class RHGameBoard: UIViewController {
     }
     
     func newBackground() {
-        background = UIColor(red: CGFloat.random(in: 0.2...0.4), green: CGFloat.random(in: 0.2...0.4), blue: CGFloat.random(in: 0.2...0.4), alpha: 1.0)
+        background = UIColor(red: CGFloat.random(in: 0.1...0.3), green: CGFloat.random(in: 0.1...0.3), blue: CGFloat.random(in: 0.1...0.3), alpha: 1.0)
     }
     
     func buildBlueprint(blueprint: [Car]) {
@@ -283,6 +283,7 @@ class RHGameBoard: UIViewController {
             if car.hasCoordinate(compare: coordinate) {
                 selected = car
                 //car.color.display()
+                print(car.color.distinctColorIndex)
                 car.select()
                 //car.color.display()
             } else {
@@ -336,5 +337,5 @@ class RHGameBoard: UIViewController {
             
         }
     }
-    
+
 }

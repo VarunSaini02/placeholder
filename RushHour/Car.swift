@@ -201,29 +201,7 @@ class Car {
             throw CarInfo.invalidDirection(movingCar: self, direction: direction)
         }
     }
-    
-    //fixes color of Car
-    func fix(cars: [Car]) -> Car {
-        var needsFixing = false
-        for car in cars {
-            if car.color.isTooSimilar(self.color, 0.25) {
-                needsFixing = true
-            }
-        }
-        if needsFixing {
-            while needsFixing {
-                needsFixing = false
-                self.color = Color()
-                for car in cars {
-                    if car.color.isTooSimilar(self.color, 0.25) {
-                        needsFixing = true
-                    }
-                }
-            }
-        }
-        return self
-    }
-}
+ }
 
 class Coordinate {
     var x = 0
