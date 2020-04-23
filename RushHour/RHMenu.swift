@@ -29,6 +29,7 @@ class RHMenu: UIViewController {
             levelStepper.isHidden = false
             carLabel.isHidden = true
             carSlider.isHidden = true
+            levelStepper.maximumValue = Double(Blueprint().levels[0][0].count)
         }
     }
     
@@ -44,6 +45,7 @@ class RHMenu: UIViewController {
             levelStepper.isHidden = false
             carLabel.isHidden = true
             carSlider.isHidden = true
+            levelStepper.maximumValue = Double(Blueprint().levels[0][0].count)
         }
     }
     
