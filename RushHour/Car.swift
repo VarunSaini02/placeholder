@@ -101,7 +101,7 @@ class Car {
         return false
     }
     
-    func move(direction: String, cars: [Car]) throws {
+    func move(direction: String, cars: [Car], errorHandler: (LocalizedError?) -> ()) {
         
         var otherCars = cars
         var indexToRemove = 0
@@ -130,12 +130,12 @@ class Car {
                         coordinate.x += 1
                     }
                 } else {
-                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
+                    errorHandler(CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!))
                 }
             } else if (indexToRemove == 0) {
-                throw CarInfo.levelComplete
+                errorHandler(CarInfo.levelComplete)
             } else {
-                throw CarInfo.hitWall(movingCar: self, direction: direction)
+                errorHandler(CarInfo.hitWall(movingCar: self, direction: direction))
             }
         } else if (direction.elementsEqual("left") && isHorizontal) {
             if (coordinates[0].x != 1) {
@@ -151,10 +151,10 @@ class Car {
                         coordinate.x -= 1
                     }
                 } else {
-                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
+                    errorHandler(CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!))
                 }
             } else {
-                throw CarInfo.hitWall(movingCar: self, direction: direction)
+                errorHandler(CarInfo.hitWall(movingCar: self, direction: direction))
             }
         } else if (direction.elementsEqual("up") && !isHorizontal) {
             if (coordinates[coordinates.count - 1].y != 6) {
@@ -170,10 +170,10 @@ class Car {
                         coordinate.y += 1
                     }
                 } else {
-                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
+                    errorHandler(CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!))
                 }
             } else {
-                throw CarInfo.hitWall(movingCar: self, direction: direction)
+                errorHandler(CarInfo.hitWall(movingCar: self, direction: direction))
             }
         } else if (direction.elementsEqual("down") && !isHorizontal) {
             if (coordinates[0].y != 1) {
@@ -189,16 +189,16 @@ class Car {
                         coordinate.y -= 1
                     }
                 } else {
-                    throw CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!)
+                    errorHandler(CarInfo.carsCollided(movingCar: self, unmovingCar: collisionCar!))
                 }
             } else {
-                throw CarInfo.hitWall(movingCar: self, direction: direction)
+                errorHandler(CarInfo.hitWall(movingCar: self, direction: direction))
             }
         } else if (!(direction.elementsEqual("right") || direction.elementsEqual("left") || direction.elementsEqual("up") || direction.elementsEqual("down"))) {
-            throw CarInfo.codingError(movingCar: self, invalidDirection: direction)
+            errorHandler(CarInfo.codingError(movingCar: self, invalidDirection: direction))
         } else {
             //vertical car going right/left or horizontal car going up/down
-            throw CarInfo.invalidDirection(movingCar: self, direction: direction)
+            errorHandler(CarInfo.invalidDirection(movingCar: self, direction: direction))
         }
     }
  }

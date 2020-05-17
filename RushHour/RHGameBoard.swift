@@ -294,48 +294,44 @@ class RHGameBoard: UIViewController {
     }
     
     @IBAction func rightPressed(_ sender: Any) {
-        do {
-            try selected?.move(direction: "right", cars: cars)
-            updateCarsOnBoard()
-        } catch let error as LocalizedError {
-            print(error.localizedDescription)
-            if error.localizedDescription.elementsEqual("Level has been completed!") {
-                resetButtonPressed(self)
-            }
-        } catch {
-            
-        }
+        selected?.move(direction: "right", cars: cars, errorHandler: { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+                
+                // resets level if the CarInfo type is .levelCompleted
+                if case .levelComplete = err as? CarInfo {
+                    self.resetButtonPressed(self)
+                }
+             }
+        })
+        updateCarsOnBoard()
     }
+    
     @IBAction func leftPressed(_ sender: Any) {
-        do {
-            try selected?.move(direction: "left", cars: cars)
-            updateCarsOnBoard()
-        } catch let error as LocalizedError {
-            print(error.localizedDescription)
-        } catch {
-            
-        }
+        selected?.move(direction: "left", cars: cars, errorHandler: { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+            }
+        })
+        updateCarsOnBoard()
     }
     
     @IBAction func upPressed(_ sender: Any) {
-        do {
-            try selected?.move(direction: "up", cars: cars)
-            updateCarsOnBoard()
-        } catch let error as LocalizedError {
-            print(error.localizedDescription)
-        } catch {
-            
-        }
+        selected?.move(direction: "up", cars: cars, errorHandler: { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+            }
+        })
+        updateCarsOnBoard()
     }
+    
     @IBAction func downPressed(_ sender: Any) {
-        do {
-            try selected?.move(direction: "down", cars: cars)
-            updateCarsOnBoard()
-        } catch let error as LocalizedError {
-            print(error.localizedDescription)
-        } catch {
-            
-        }
+        selected?.move(direction: "down", cars: cars, errorHandler: { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+            }
+        })
+        updateCarsOnBoard()
     }
 
 }
