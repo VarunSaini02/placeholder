@@ -293,20 +293,6 @@ class RHGameBoard: UIViewController {
         updateCarsOnBoard()
     }
     
-//    @IBAction func rightPressed(_ sender: Any) {
-//        do {
-//            try selected?.move(direction: "right", cars: cars)
-//            updateCarsOnBoard()
-//        } catch let error as LocalizedError {
-//            print(error.localizedDescription)
-//            if error.localizedDescription.elementsEqual("Level has been completed!") {
-//                resetButtonPressed(self)
-//            }
-//        } catch {
-//
-//        }
-//    }
-    
     @IBAction func rightPressed(_ sender: Any) {
         selected?.move(direction: "right", cars: cars, errorHandler: { (error) in
             if let err = error {
@@ -320,6 +306,7 @@ class RHGameBoard: UIViewController {
         })
         updateCarsOnBoard()
     }
+    
     @IBAction func leftPressed(_ sender: Any) {
         selected?.move(direction: "left", cars: cars, errorHandler: { (error) in
             if let err = error {
