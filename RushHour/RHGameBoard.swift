@@ -387,8 +387,4 @@ class RHGameBoard: UIViewController {
         })
         updateCarsOnBoard()
     }
-    
-    @objc func fireTimer() {
-        self.resetButtonPressed(self)
-    }
 }
