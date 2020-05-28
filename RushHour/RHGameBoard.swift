@@ -54,6 +54,7 @@ class RHGameBoard: UIViewController {
 
     
     var TapRecognizers = [[UITapGestureRecognizer]]()
+    var PanRecognizers = [[UIPanGestureRecognizer]]()
     var ImageViews = [[UIImageView]]()
     let colorStrings =
     [
@@ -247,12 +248,14 @@ class RHGameBoard: UIViewController {
         //initialize tap recognizers arrays
         for _ in 0...5 {
             TapRecognizers.append([UITapGestureRecognizer]())
+            PanRecognizers.append([UIPanGestureRecognizer]())
         }
         
         //initialize tap recognizers in arrays
         for i in 0...5 {
             for _ in 0...5 {
                 TapRecognizers[i].append(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
+                PanRecognizers[i].append(UIPanGestureRecognizer(target: self, action: #selector(imageViewDragged)))
             }
         }
         
@@ -260,6 +263,52 @@ class RHGameBoard: UIViewController {
         for i in 0...5 {
             for j in 0...5 {
                 ImageViews[i][j].addGestureRecognizer(TapRecognizers[i][j])
+                ImageViews[i][j].addGestureRecognizer(PanRecognizers[i][j])
+                PanRecognizers[i][j].maximumNumberOfTouches = 1
+                PanRecognizers[i][j].minimumNumberOfTouches = 1
+            }
+        }
+    }
+    
+    
+    
+    @objc func imageViewDragged(recognizer: UIPanGestureRecognizer) {
+        guard let imageView = recognizer.view as? UIImageView else { return }
+        for i in 0...5 {
+            for j in 0...5 {
+                if (imageView.isEqual(ImageViews[i][j])) {
+                    clickedCoordinate(coordinate: Coordinate(i+1, j+1))
+                }
+            }
+        }
+        let translation = recognizer.translation(in: view)
+    
+        if recognizer.state != .cancelled {
+            if selected?.isHorizontal ?? true {
+                //right
+                if translation.x > imageView.frame.width {
+                    rightPressed(self)
+                    //if ((selected?.isTouching(cars[0]))! && (selected?.hasCoordinate(compare: Coordinate(6, 4)))!) {
+                        //rightPressed(self)
+                    //}
+                    recognizer.setTranslation(.zero, in: view)
+                }
+                //left
+                if translation.x < -imageView.frame.width {
+                    leftPressed(self)
+                    recognizer.setTranslation(.zero, in: view)
+                }
+            } else {
+                //up
+                if translation.y < -imageView.frame.width {
+                    upPressed(self)
+                    recognizer.setTranslation(.zero, in: view)
+                }
+                //down
+                if translation.y > imageView.frame.width {
+                    downPressed(self)
+                    recognizer.setTranslation(.zero, in: view)
+                }
             }
         }
     }
@@ -283,7 +332,7 @@ class RHGameBoard: UIViewController {
             if car.hasCoordinate(compare: coordinate) {
                 selected = car
                 //car.color.display()
-                print(car.color.distinctColorIndex)
+                //print(car.color.distinctColorIndex)
                 car.select()
                 //car.color.display()
             } else {
