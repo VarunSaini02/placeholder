@@ -137,6 +137,9 @@ class Car {
             } else {
                 errorHandler(CarInfo.hitWall(movingCar: self, direction: direction))
             }
+            if (indexToRemove == 0 && coordinates[coordinates.count - 1].x == 6) {
+                errorHandler(CarInfo.levelComplete)
+            }
         } else if (direction.elementsEqual("left") && isHorizontal) {
             if (coordinates[0].x != 1) {
                 var willBeCollision = false

@@ -189,6 +189,7 @@ class RHGameBoard: UIViewController {
                 ImageViews[coordinate.x - 1][coordinate.y - 1].backgroundColor = cars[index].color.UIC
             }
         }
+        cars[0].printCoordinates()
     }
     
     func fillImageViewsAndTapRecognizers() {
@@ -349,7 +350,11 @@ class RHGameBoard: UIViewController {
                 
                 // resets level if the CarInfo type is .levelCompleted
                 if case .levelComplete = err as? CarInfo {
-                    self.resetButtonPressed(self)
+                    updateCarsOnBoard()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.resetButtonPressed(self)
+                    }
                 }
              }
         })
@@ -382,5 +387,8 @@ class RHGameBoard: UIViewController {
         })
         updateCarsOnBoard()
     }
-
+    
+    @objc func fireTimer() {
+        self.resetButtonPressed(self)
+    }
 }
