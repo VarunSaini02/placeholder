@@ -310,22 +310,22 @@ class Color {
     }
     
     func highlight() {
-        if isHighlighted == false {
-            red *= (red != 0.0) ? 1.2 : 0.0
-            green *= (green != 0.0) ? 1.2 : 0.0
-            blue *= (blue != 0.0) ? 1.2 : 0.0
-            UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
+//        if isHighlighted == false {
+//            red *= (red != 0.0) ? 1.2 : 0.0
+//            green *= (green != 0.0) ? 1.2 : 0.0
+//            blue *= (blue != 0.0) ? 1.2 : 0.0
+//            UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+//        }
         isHighlighted = true
     }
     
     func unhighlight() {
-        if isHighlighted == true {
-            red *= (red != 0.0) ? 0.8 : 0.0
-            green *= (green != 0.0) ? 0.8 : 0.0
-            blue *= (blue != 0.0) ? 0.8 : 0.0
-            UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
+//        if isHighlighted == true {
+//            red *= (red != 0.0) ? 0.8 : 0.0
+//            green *= (green != 0.0) ? 0.8 : 0.0
+//            blue *= (blue != 0.0) ? 0.8 : 0.0
+//            UIC = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+//        }
         isHighlighted = false
     }
     
